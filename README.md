@@ -4,6 +4,8 @@ API REST de The Vampire Diaries, feita para o Projeto Prático de Interfaces Web
 seguem o formato da [SWAPI](https://swapi.dev): listas paginadas com `count`, `next`, `previous` e
 `results`, e relações entre recursos como URLs.
 
+**No ar em https://tvd-api.vercel.app/api**
+
 ## Recursos
 
 | Rota | O que traz | Itens |
@@ -57,4 +59,4 @@ npm test       # testes com node:test
 
 ## Deploy
 
-Publicada na Vercel como app Express: `src/index.js` exporta o app.
+Publicada na Vercel como app Express: `src/index.js` exporta o app. Cada push na `main` gera um deploy de produção.
