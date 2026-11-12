@@ -1,0 +1,12 @@
+[
+  { "id": 1, "name": "Salvatore", "founding": true, "description": "Uma das famílias fundadoras de Mystic Falls. Os irmãos Stefan e Damon foram transformados em vampiros em 1864 e voltam à cidade no começo da série." },
+  { "id": 2, "name": "Gilbert", "founding": true, "description": "Uma das famílias fundadoras de Mystic Falls. Guarda os diários e as invenções de Jonathan Gilbert, usados para caçar vampiros desde 1864." },
+  { "id": 3, "name": "Lockwood", "founding": true, "description": "Uma das famílias fundadoras de Mystic Falls, com vários prefeitos da cidade. Carrega o gene do lobisomem." },
+  { "id": 4, "name": "Forbes", "founding": true, "description": "Uma das famílias fundadoras de Mystic Falls. Liz Forbes é a xerife da cidade e integra o Conselho dos Fundadores." },
+  { "id": 5, "name": "Fell", "founding": true, "description": "Uma das famílias fundadoras de Mystic Falls. Os registros de Honoria Fell sobre a fundação da cidade aparecem ao longo da série." },
+  { "id": 6, "name": "Mikaelson", "founding": false, "description": "A família dos Vampiros Originais, transformados por Esther há mais de mil anos." },
+  { "id": 7, "name": "Bennett", "founding": false, "description": "Linhagem de bruxas poderosas que remonta à bruxa Qetsiyah. Emily Bennett já protegia os vampiros de Mystic Falls em 1864." },
+  { "id": 8, "name": "Petrova", "founding": false, "description": "Linhagem das doppelgängers: Amara, Tatia, Katerina Petrova e, séculos depois, Elena Gilbert." },
+  { "id": 9, "name": "Parker", "founding": false, "description": "Família que lidera o clã Gemini, de bruxas. Nas gerações Parker, os gêmeos precisam se fundir e o mais forte assume o clã." },
+  { "id": 10, "name": "Donovan", "founding": false, "description": "Família de Matt e Vicki Donovan, criados quase sozinhos em Mystic Falls." }
+]

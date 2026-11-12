@@ -1,0 +1,11 @@
+[
+  { "id": 1, "name": "Humano", "description": "Pessoa comum, sem poderes sobrenaturais. Muitos humanos de Mystic Falls conhecem o segredo da cidade e fazem parte do Conselho dos Fundadores." },
+  { "id": 2, "name": "Vampiro", "description": "Humano que morreu com sangue de vampiro no organismo. Precisa de sangue para viver, tem força e velocidade sobre-humanas e só anda no sol com um anel ou colar de lápis-lazúli enfeitiçado." },
+  { "id": 3, "name": "Vampiro Original", "description": "Membro da primeira linhagem de vampiros, criada pela bruxa Esther a partir dos próprios filhos. São mais fortes que os outros vampiros e só morrem com a estaca de carvalho-branco." },
+  { "id": 4, "name": "Lobisomem", "description": "Pessoa que carrega o gene do lobisomem e o ativa ao causar uma morte. A partir daí, se transforma em lobo a cada lua cheia." },
+  { "id": 5, "name": "Híbrido", "description": "Vampiro e lobisomem ao mesmo tempo. Pode se transformar em lobo quando quiser e sua mordida é mortal para vampiros." },
+  { "id": 6, "name": "Bruxa", "description": "Pessoa capaz de praticar magia, em geral tirando força da natureza, dos ancestrais ou de outras fontes." },
+  { "id": 7, "name": "Herege", "description": "Bruxa sifonadora do clã Gemini transformada em vampira. Consegue sugar a magia do próprio corpo de vampiro e, por isso, continua fazendo feitiços." },
+  { "id": 8, "name": "Doppelgänger", "description": "Sósia de outra pessoa, nascido de linhagens criadas pelo feitiço de imortalidade de Silas e Amara. O sangue dos doppelgängers é ingrediente de vários feitiços." },
+  { "id": 9, "name": "Imortal", "description": "Quem bebeu o elixir de imortalidade criado pela bruxa Qetsiyah. Não envelhece e não morre por meios comuns." }
+]

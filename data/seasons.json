@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "name": "Temporada 1",
+    "premiereDate": "2009-09-10",
+    "endDate": "2010-05-13",
+    "image": "https://static.tvmaze.com/uploads/images/medium_portrait/398/995293.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Temporada 2",
+    "premiereDate": "2010-09-09",
+    "endDate": "2011-05-12",
+    "image": "https://static.tvmaze.com/uploads/images/medium_portrait/398/995290.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Temporada 3",
+    "premiereDate": "2011-09-15",
+    "endDate": "2012-05-10",
+    "image": "https://static.tvmaze.com/uploads/images/medium_portrait/398/995291.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Temporada 4",
+    "premiereDate": "2012-10-11",
+    "endDate": "2013-05-16",
+    "image": "https://static.tvmaze.com/uploads/images/medium_portrait/398/995292.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Temporada 5",
+    "premiereDate": "2013-10-03",
+    "endDate": "2014-05-15",
+    "image": "https://static.tvmaze.com/uploads/images/medium_portrait/398/995289.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Temporada 6",
+    "premiereDate": "2014-10-02",
+    "endDate": "2015-05-14",
+    "image": "https://static.tvmaze.com/uploads/images/medium_portrait/398/995294.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Temporada 7",
+    "premiereDate": "2015-10-08",
+    "endDate": "2016-05-13",
+    "image": "https://static.tvmaze.com/uploads/images/medium_portrait/398/995288.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Temporada 8",
+    "premiereDate": "2016-10-21",
+    "endDate": "2017-03-10",
+    "image": "https://static.tvmaze.com/uploads/images/medium_portrait/398/995287.jpg"
+  }
+]
