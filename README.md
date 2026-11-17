@@ -56,6 +56,9 @@ Os testes também conferem a documentação: cada item que a API devolve precisa
 `docs/openapi.json` e os exemplos precisam bater com os dados atuais. Campo novo na API sem entrar no
 contrato faz o teste falhar.
 
+`npm run docs` gera o `docs/openapi.json` de novo pelo `scripts/gerar-openapi.js`, onde ficam os textos e os
+schemas. Os exemplos saem da própria API. Depois de mudar os dados ou um campo, rode `npm run docs` e `npm test`.
+
 ## Dados
 
 - `data/fontes/`: dados de origem, guardados como vieram.
