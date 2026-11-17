@@ -6,6 +6,10 @@ seguem o formato da [SWAPI](https://swapi.dev): listas paginadas com `count`, `n
 
 **No ar em https://tvd-api.vercel.app/api**
 
+**Documentação interativa em https://tvd-api.vercel.app/docs**: cada rota, cada campo com tipo e descrição,
+exemplos de resposta e o botão "Try it out" para chamar a API pelo navegador. O contrato OpenAPI 3.1 fica em
+[`docs/openapi.json`](docs/openapi.json) e também é servido em `/openapi.json`.
+
 ## Recursos
 
 | Rota | O que traz | Itens |
@@ -44,9 +48,13 @@ async function buscarTodos(url) {
 
 ```bash
 npm install
-npm start      # http://localhost:3000/api
+npm start      # http://localhost:3000/api e a documentação em http://localhost:3000/docs
 npm test       # testes com node:test
 ```
+
+Os testes também conferem a documentação: cada item que a API devolve precisa bater com o schema de
+`docs/openapi.json` e os exemplos precisam bater com os dados atuais. Campo novo na API sem entrar no
+contrato faz o teste falhar.
 
 ## Dados
 

@@ -1,0 +1,1344 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "tvd-api",
+    "version": "1.0.0",
+    "description": "API REST de **The Vampire Diaries**, aberta e somente leitura, sem autenticação e com CORS liberado.\n\nAs respostas seguem o formato da [SWAPI](https://swapi.dev): listas paginadas com `count`, `next`, `previous` e `results`, e relações entre recursos como URLs. Para pegar a família de um personagem, por exemplo, basta fazer um GET na URL do campo `family`.\n\nDescrições, espécies e resumos dos episódios estão em português. Títulos dos episódios e créditos ficam no original.\n\nFontes: [afaf98/Vampire_diaries_API](https://github.com/afaf98/Vampire_diaries_API) e [TVMaze](https://www.tvmaze.com/api) (CC BY-SA), mais dados escritos à mão.",
+    "license": {
+      "name": "Resumos e imagens: CC BY-SA 4.0 (TVMaze)",
+      "url": "https://creativecommons.org/licenses/by-sa/4.0/"
+    }
+  },
+  "externalDocs": {
+    "description": "Código no GitHub",
+    "url": "https://github.com/alexsant22/tvd-api"
+  },
+  "servers": [
+    {
+      "url": "https://tvd-api.vercel.app",
+      "description": "Produção (Vercel)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Raiz",
+      "description": "Ponto de partida."
+    },
+    {
+      "name": "Personagens",
+      "description": "49 personagens."
+    },
+    {
+      "name": "Episódios",
+      "description": "171 episódios."
+    },
+    {
+      "name": "Temporadas",
+      "description": "8 temporadas."
+    },
+    {
+      "name": "Espécies",
+      "description": "9 espécies."
+    },
+    {
+      "name": "Famílias",
+      "description": "10 famílias."
+    }
+  ],
+  "paths": {
+    "/api": {
+      "get": {
+        "tags": [
+          "Raiz"
+        ],
+        "summary": "Lista os recursos",
+        "description": "Ponto de partida da API: devolve a URL de cada recurso.",
+        "operationId": "raiz",
+        "responses": {
+          "200": {
+            "description": "URL de cada recurso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "characters": {
+                      "type": "string",
+                      "format": "uri",
+                      "description": "URL da lista de personagens."
+                    },
+                    "episodes": {
+                      "type": "string",
+                      "format": "uri",
+                      "description": "URL da lista de episódios."
+                    },
+                    "seasons": {
+                      "type": "string",
+                      "format": "uri",
+                      "description": "URL da lista de temporadas."
+                    },
+                    "species": {
+                      "type": "string",
+                      "format": "uri",
+                      "description": "URL da lista de espécies."
+                    },
+                    "families": {
+                      "type": "string",
+                      "format": "uri",
+                      "description": "URL da lista de famílias."
+                    }
+                  },
+                  "required": [
+                    "characters",
+                    "episodes",
+                    "seasons",
+                    "species",
+                    "families"
+                  ],
+                  "additionalProperties": false
+                },
+                "example": {
+                  "characters": "https://tvd-api.vercel.app/api/characters",
+                  "episodes": "https://tvd-api.vercel.app/api/episodes",
+                  "seasons": "https://tvd-api.vercel.app/api/seasons",
+                  "species": "https://tvd-api.vercel.app/api/species",
+                  "families": "https://tvd-api.vercel.app/api/families"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/characters": {
+      "get": {
+        "tags": [
+          "Personagens"
+        ],
+        "summary": "Lista personagens",
+        "description": "Lista paginada de personagens: 49 no total, 10 por página. Para trazer a lista inteira, siga `next` até ele vir null.",
+        "operationId": "listar_characters",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "description": "Filtra pelo nome. Busca por trecho, sem diferenciar maiúsculas nem acentos. O filtro continua nos links `next` e `previous`.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "salvatore"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Página da lista. Busca sem resultado também responde 200, com `count` 0 e `results` vazio.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListaCharacter"
+                },
+                "examples": {
+                  "busca_salvatore": {
+                    "summary": "GET /api/characters?name=salvatore",
+                    "value": {
+                      "count": 5,
+                      "next": null,
+                      "previous": null,
+                      "results": [
+                        {
+                          "id": 2,
+                          "name": "Stefan Salvatore",
+                          "actor": "Paul Wesley",
+                          "species": [
+                            "https://tvd-api.vercel.app/api/species/1",
+                            "https://tvd-api.vercel.app/api/species/2",
+                            "https://tvd-api.vercel.app/api/species/8"
+                          ],
+                          "family": "https://tvd-api.vercel.app/api/families/1",
+                          "description": "Vampiro de 1864 que tenta viver entre humanos sem beber sangue humano. Doppelgänger de Silas.",
+                          "image": "https://static.tvmaze.com/uploads/images/medium_portrait/570/1425603.jpg",
+                          "episodeCount": 171,
+                          "url": "https://tvd-api.vercel.app/api/characters/2"
+                        },
+                        {
+                          "id": 3,
+                          "name": "Damon Salvatore",
+                          "actor": "Ian Somerhalder",
+                          "species": [
+                            "https://tvd-api.vercel.app/api/species/1",
+                            "https://tvd-api.vercel.app/api/species/2"
+                          ],
+                          "family": "https://tvd-api.vercel.app/api/families/1",
+                          "description": "Irmão mais velho de Stefan. Começa a série como antagonista e vai se tornando aliado do grupo.",
+                          "image": "https://static.tvmaze.com/uploads/images/medium_portrait/0/465.jpg",
+                          "episodeCount": 171,
+                          "url": "https://tvd-api.vercel.app/api/characters/3"
+                        },
+                        {
+                          "id": 33,
+                          "name": "Giuseppe Salvatore",
+                          "actor": "James Remar",
+                          "species": [
+                            "https://tvd-api.vercel.app/api/species/1"
+                          ],
+                          "family": "https://tvd-api.vercel.app/api/families/1",
+                          "description": "Pai de Stefan e Damon, caçador de vampiros em 1864.",
+                          "image": null,
+                          "episodeCount": null,
+                          "url": "https://tvd-api.vercel.app/api/characters/33"
+                        },
+                        {
+                          "id": 34,
+                          "name": "Lily Salvatore",
+                          "actor": "Annie Wersching",
+                          "species": [
+                            "https://tvd-api.vercel.app/api/species/1",
+                            "https://tvd-api.vercel.app/api/species/2"
+                          ],
+                          "family": "https://tvd-api.vercel.app/api/families/1",
+                          "description": "Mãe de Stefan e Damon, que eles julgavam morta desde a infância.",
+                          "image": null,
+                          "episodeCount": null,
+                          "url": "https://tvd-api.vercel.app/api/characters/34"
+                        },
+                        {
+                          "id": 35,
+                          "name": "Zach Salvatore",
+                          "actor": "Chris William Martin",
+                          "species": [
+                            "https://tvd-api.vercel.app/api/species/1"
+                          ],
+                          "family": "https://tvd-api.vercel.app/api/families/1",
+                          "description": "Descendente humano dos Salvatore, que guarda a pensão da família.",
+                          "image": null,
+                          "episodeCount": null,
+                          "url": "https://tvd-api.vercel.app/api/characters/35"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/PaginaInvalida"
+          }
+        }
+      }
+    },
+    "/api/characters/{id}": {
+      "get": {
+        "tags": [
+          "Personagens"
+        ],
+        "summary": "Detalhe de um personagem",
+        "operationId": "detalhar_characters",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Identificador numérico.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "O item pedido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Character"
+                },
+                "example": {
+                  "id": 1,
+                  "name": "Elena Gilbert",
+                  "actor": "Nina Dobrev",
+                  "species": [
+                    "https://tvd-api.vercel.app/api/species/1",
+                    "https://tvd-api.vercel.app/api/species/8",
+                    "https://tvd-api.vercel.app/api/species/2"
+                  ],
+                  "family": "https://tvd-api.vercel.app/api/families/2",
+                  "description": "Protagonista da série. Doppelgänger de Katherine, se apaixona por Stefan e depois por Damon.",
+                  "image": "https://static.tvmaze.com/uploads/images/medium_portrait/0/1494.jpg",
+                  "episodeCount": 134,
+                  "url": "https://tvd-api.vercel.app/api/characters/1"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NaoEncontrado"
+          }
+        }
+      }
+    },
+    "/api/episodes": {
+      "get": {
+        "tags": [
+          "Episódios"
+        ],
+        "summary": "Lista episódios",
+        "description": "Lista paginada de episódios: 171 no total, 10 por página. Para trazer a lista inteira, siga `next` até ele vir null.",
+        "operationId": "listar_episodes",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "description": "Filtra pelo título do episódio. Busca por trecho, sem diferenciar maiúsculas nem acentos. O filtro continua nos links `next` e `previous`.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "pilot"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Página da lista. Busca sem resultado também responde 200, com `count` 0 e `results` vazio.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListaEpisode"
+                },
+                "examples": {
+                  "busca_pilot": {
+                    "summary": "GET /api/episodes?name=pilot",
+                    "value": {
+                      "count": 1,
+                      "next": null,
+                      "previous": null,
+                      "results": [
+                        {
+                          "id": 1,
+                          "title": "Pilot",
+                          "season": "https://tvd-api.vercel.app/api/seasons/1",
+                          "number": 1,
+                          "airDate": "2009-09-10",
+                          "directedBy": "Marcos Siega",
+                          "writtenBy": "Teleplay by : Kevin Williamson & Julie Plec",
+                          "usViewers": 4.91,
+                          "productionCode": "296766",
+                          "runtime": 60,
+                          "summary": "Na estreia da série, Elena, uma estudante do ensino médio da Virgínia, se apaixona por um aluno novo que, na verdade, é um vampiro centenário tentando viver em paz entre os humanos. O romance que começa é ameaçado quando o irmão dele, um vampiro cruel, chega à cidade e tenta conquistar o coração de Elena.",
+                          "image": "https://static.tvmaze.com/uploads/images/medium_landscape/25/62733.jpg",
+                          "url": "https://tvd-api.vercel.app/api/episodes/1"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/PaginaInvalida"
+          }
+        }
+      }
+    },
+    "/api/episodes/{id}": {
+      "get": {
+        "tags": [
+          "Episódios"
+        ],
+        "summary": "Detalhe de um episódio",
+        "operationId": "detalhar_episodes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Identificador numérico.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "O item pedido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Episode"
+                },
+                "example": {
+                  "id": 1,
+                  "title": "Pilot",
+                  "season": "https://tvd-api.vercel.app/api/seasons/1",
+                  "number": 1,
+                  "airDate": "2009-09-10",
+                  "directedBy": "Marcos Siega",
+                  "writtenBy": "Teleplay by : Kevin Williamson & Julie Plec",
+                  "usViewers": 4.91,
+                  "productionCode": "296766",
+                  "runtime": 60,
+                  "summary": "Na estreia da série, Elena, uma estudante do ensino médio da Virgínia, se apaixona por um aluno novo que, na verdade, é um vampiro centenário tentando viver em paz entre os humanos. O romance que começa é ameaçado quando o irmão dele, um vampiro cruel, chega à cidade e tenta conquistar o coração de Elena.",
+                  "image": "https://static.tvmaze.com/uploads/images/medium_landscape/25/62733.jpg",
+                  "url": "https://tvd-api.vercel.app/api/episodes/1"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NaoEncontrado"
+          }
+        }
+      }
+    },
+    "/api/seasons": {
+      "get": {
+        "tags": [
+          "Temporadas"
+        ],
+        "summary": "Lista temporadas",
+        "description": "Lista paginada de temporadas: 8 no total, 10 por página. Para trazer a lista inteira, siga `next` até ele vir null.",
+        "operationId": "listar_seasons",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "description": "Filtra pelo nome. Busca por trecho, sem diferenciar maiúsculas nem acentos. O filtro continua nos links `next` e `previous`.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "temporada 8"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Página da lista. Busca sem resultado também responde 200, com `count` 0 e `results` vazio.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListaSeason"
+                },
+                "examples": {
+                  "busca_temporada_8": {
+                    "summary": "GET /api/seasons?name=temporada 8",
+                    "value": {
+                      "count": 1,
+                      "next": null,
+                      "previous": null,
+                      "results": [
+                        {
+                          "id": 8,
+                          "name": "Temporada 8",
+                          "premiereDate": "2016-10-21",
+                          "endDate": "2017-03-10",
+                          "image": "https://static.tvmaze.com/uploads/images/medium_portrait/398/995287.jpg",
+                          "episodeCount": 16,
+                          "episodes": [
+                            "https://tvd-api.vercel.app/api/episodes/156",
+                            "https://tvd-api.vercel.app/api/episodes/157",
+                            "https://tvd-api.vercel.app/api/episodes/158",
+                            "https://tvd-api.vercel.app/api/episodes/159",
+                            "https://tvd-api.vercel.app/api/episodes/160",
+                            "https://tvd-api.vercel.app/api/episodes/161",
+                            "https://tvd-api.vercel.app/api/episodes/162",
+                            "https://tvd-api.vercel.app/api/episodes/163",
+                            "https://tvd-api.vercel.app/api/episodes/164",
+                            "https://tvd-api.vercel.app/api/episodes/165",
+                            "https://tvd-api.vercel.app/api/episodes/166",
+                            "https://tvd-api.vercel.app/api/episodes/167",
+                            "https://tvd-api.vercel.app/api/episodes/168",
+                            "https://tvd-api.vercel.app/api/episodes/169",
+                            "https://tvd-api.vercel.app/api/episodes/170",
+                            "https://tvd-api.vercel.app/api/episodes/171"
+                          ],
+                          "url": "https://tvd-api.vercel.app/api/seasons/8"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/PaginaInvalida"
+          }
+        }
+      }
+    },
+    "/api/seasons/{id}": {
+      "get": {
+        "tags": [
+          "Temporadas"
+        ],
+        "summary": "Detalhe de uma temporada",
+        "operationId": "detalhar_seasons",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Identificador numérico.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "example": 8
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "O item pedido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Season"
+                },
+                "example": {
+                  "id": 8,
+                  "name": "Temporada 8",
+                  "premiereDate": "2016-10-21",
+                  "endDate": "2017-03-10",
+                  "image": "https://static.tvmaze.com/uploads/images/medium_portrait/398/995287.jpg",
+                  "episodeCount": 16,
+                  "episodes": [
+                    "https://tvd-api.vercel.app/api/episodes/156",
+                    "https://tvd-api.vercel.app/api/episodes/157",
+                    "https://tvd-api.vercel.app/api/episodes/158",
+                    "https://tvd-api.vercel.app/api/episodes/159",
+                    "https://tvd-api.vercel.app/api/episodes/160",
+                    "https://tvd-api.vercel.app/api/episodes/161",
+                    "https://tvd-api.vercel.app/api/episodes/162",
+                    "https://tvd-api.vercel.app/api/episodes/163",
+                    "https://tvd-api.vercel.app/api/episodes/164",
+                    "https://tvd-api.vercel.app/api/episodes/165",
+                    "https://tvd-api.vercel.app/api/episodes/166",
+                    "https://tvd-api.vercel.app/api/episodes/167",
+                    "https://tvd-api.vercel.app/api/episodes/168",
+                    "https://tvd-api.vercel.app/api/episodes/169",
+                    "https://tvd-api.vercel.app/api/episodes/170",
+                    "https://tvd-api.vercel.app/api/episodes/171"
+                  ],
+                  "url": "https://tvd-api.vercel.app/api/seasons/8"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NaoEncontrado"
+          }
+        }
+      }
+    },
+    "/api/species": {
+      "get": {
+        "tags": [
+          "Espécies"
+        ],
+        "summary": "Lista espécies",
+        "description": "Lista paginada de espécies: 9 no total, 10 por página. Para trazer a lista inteira, siga `next` até ele vir null.",
+        "operationId": "listar_species",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "description": "Filtra pelo nome. Busca por trecho, sem diferenciar maiúsculas nem acentos. O filtro continua nos links `next` e `previous`.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "lobisomem"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Página da lista. Busca sem resultado também responde 200, com `count` 0 e `results` vazio.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListaSpecies"
+                },
+                "examples": {
+                  "busca_lobisomem": {
+                    "summary": "GET /api/species?name=lobisomem",
+                    "value": {
+                      "count": 1,
+                      "next": null,
+                      "previous": null,
+                      "results": [
+                        {
+                          "id": 4,
+                          "name": "Lobisomem",
+                          "description": "Pessoa que carrega o gene do lobisomem e o ativa ao causar uma morte. A partir daí, se transforma em lobo a cada lua cheia.",
+                          "characters": [
+                            "https://tvd-api.vercel.app/api/characters/8",
+                            "https://tvd-api.vercel.app/api/characters/32",
+                            "https://tvd-api.vercel.app/api/characters/49"
+                          ],
+                          "url": "https://tvd-api.vercel.app/api/species/4"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/PaginaInvalida"
+          }
+        }
+      }
+    },
+    "/api/species/{id}": {
+      "get": {
+        "tags": [
+          "Espécies"
+        ],
+        "summary": "Detalhe de uma espécie",
+        "operationId": "detalhar_species",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Identificador numérico.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "example": 4
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "O item pedido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Species"
+                },
+                "example": {
+                  "id": 4,
+                  "name": "Lobisomem",
+                  "description": "Pessoa que carrega o gene do lobisomem e o ativa ao causar uma morte. A partir daí, se transforma em lobo a cada lua cheia.",
+                  "characters": [
+                    "https://tvd-api.vercel.app/api/characters/8",
+                    "https://tvd-api.vercel.app/api/characters/32",
+                    "https://tvd-api.vercel.app/api/characters/49"
+                  ],
+                  "url": "https://tvd-api.vercel.app/api/species/4"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NaoEncontrado"
+          }
+        }
+      }
+    },
+    "/api/families": {
+      "get": {
+        "tags": [
+          "Famílias"
+        ],
+        "summary": "Lista famílias",
+        "description": "Lista paginada de famílias: 10 no total, 10 por página. Para trazer a lista inteira, siga `next` até ele vir null.",
+        "operationId": "listar_families",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "description": "Filtra pelo nome. Busca por trecho, sem diferenciar maiúsculas nem acentos. O filtro continua nos links `next` e `previous`.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "salvatore"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Página da lista. Busca sem resultado também responde 200, com `count` 0 e `results` vazio.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListaFamily"
+                },
+                "examples": {
+                  "busca_salvatore": {
+                    "summary": "GET /api/families?name=salvatore",
+                    "value": {
+                      "count": 1,
+                      "next": null,
+                      "previous": null,
+                      "results": [
+                        {
+                          "id": 1,
+                          "name": "Salvatore",
+                          "founding": true,
+                          "description": "Uma das famílias fundadoras de Mystic Falls. Os irmãos Stefan e Damon foram transformados em vampiros em 1864 e voltam à cidade no começo da série.",
+                          "characters": [
+                            "https://tvd-api.vercel.app/api/characters/2",
+                            "https://tvd-api.vercel.app/api/characters/3",
+                            "https://tvd-api.vercel.app/api/characters/33",
+                            "https://tvd-api.vercel.app/api/characters/34",
+                            "https://tvd-api.vercel.app/api/characters/35"
+                          ],
+                          "url": "https://tvd-api.vercel.app/api/families/1"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/PaginaInvalida"
+          }
+        }
+      }
+    },
+    "/api/families/{id}": {
+      "get": {
+        "tags": [
+          "Famílias"
+        ],
+        "summary": "Detalhe de uma família",
+        "operationId": "detalhar_families",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Identificador numérico.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "O item pedido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Family"
+                },
+                "example": {
+                  "id": 1,
+                  "name": "Salvatore",
+                  "founding": true,
+                  "description": "Uma das famílias fundadoras de Mystic Falls. Os irmãos Stefan e Damon foram transformados em vampiros em 1864 e voltam à cidade no começo da série.",
+                  "characters": [
+                    "https://tvd-api.vercel.app/api/characters/2",
+                    "https://tvd-api.vercel.app/api/characters/3",
+                    "https://tvd-api.vercel.app/api/characters/33",
+                    "https://tvd-api.vercel.app/api/characters/34",
+                    "https://tvd-api.vercel.app/api/characters/35"
+                  ],
+                  "url": "https://tvd-api.vercel.app/api/families/1"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NaoEncontrado"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Character": {
+        "type": "object",
+        "description": "Personagem da série.",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Identificador do personagem."
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome do personagem."
+          },
+          "actor": {
+            "type": "string",
+            "description": "Ator ou atriz que interpreta o personagem."
+          },
+          "species": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri",
+              "description": "URL de uma espécie."
+            },
+            "description": "Espécies do personagem, na ordem em que ele passou por elas na série."
+          },
+          "family": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri",
+            "description": "URL da família, ou null quando o personagem não pertence a uma família cadastrada."
+          },
+          "description": {
+            "type": "string",
+            "description": "Quem é o personagem, em português."
+          },
+          "image": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri",
+            "description": "Foto do ator no papel (TVMaze), ou null quando não há foto."
+          },
+          "episodeCount": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "Em quantos episódios o personagem aparece, ou null quando a fonte não informa."
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Endereço deste personagem na API."
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "actor",
+          "species",
+          "family",
+          "description",
+          "image",
+          "episodeCount",
+          "url"
+        ],
+        "additionalProperties": false
+      },
+      "Episode": {
+        "type": "object",
+        "description": "Episódio da série.",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Identificador do episódio, de 1 a 171 na ordem de exibição."
+          },
+          "title": {
+            "type": "string",
+            "description": "Título original, em inglês."
+          },
+          "season": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL da temporada do episódio."
+          },
+          "number": {
+            "type": "integer",
+            "description": "Número do episódio dentro da temporada."
+          },
+          "airDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Data de exibição nos Estados Unidos (AAAA-MM-DD)."
+          },
+          "directedBy": {
+            "type": "string",
+            "description": "Direção."
+          },
+          "writtenBy": {
+            "type": "string",
+            "description": "Roteiro, como aparece nos créditos."
+          },
+          "usViewers": {
+            "type": "number",
+            "description": "Audiência nos Estados Unidos, em milhões de espectadores."
+          },
+          "productionCode": {
+            "type": "string",
+            "description": "Código de produção."
+          },
+          "runtime": {
+            "type": "integer",
+            "description": "Duração em minutos."
+          },
+          "summary": {
+            "type": "string",
+            "description": "Resumo em português, traduzido da TVMaze (CC BY-SA)."
+          },
+          "image": {
+            "type": "string",
+            "format": "uri",
+            "description": "Imagem do episódio (TVMaze)."
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Endereço deste episódio na API."
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "season",
+          "number",
+          "airDate",
+          "directedBy",
+          "writtenBy",
+          "usViewers",
+          "productionCode",
+          "runtime",
+          "summary",
+          "image",
+          "url"
+        ],
+        "additionalProperties": false
+      },
+      "Season": {
+        "type": "object",
+        "description": "Temporada da série.",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Número da temporada, de 1 a 8."
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome da temporada."
+          },
+          "premiereDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Data de estreia (AAAA-MM-DD)."
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Data do último episódio (AAAA-MM-DD)."
+          },
+          "image": {
+            "type": "string",
+            "format": "uri",
+            "description": "Pôster da temporada (TVMaze)."
+          },
+          "episodeCount": {
+            "type": "integer",
+            "description": "Quantidade de episódios da temporada."
+          },
+          "episodes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri",
+              "description": "URL de um episódio."
+            },
+            "description": "Episódios da temporada, em ordem."
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Endereço desta temporada na API."
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "premiereDate",
+          "endDate",
+          "image",
+          "episodeCount",
+          "episodes",
+          "url"
+        ],
+        "additionalProperties": false
+      },
+      "Species": {
+        "type": "object",
+        "description": "Espécie sobrenatural (ou humana) do universo da série.",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Identificador da espécie."
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome da espécie, em português."
+          },
+          "description": {
+            "type": "string",
+            "description": "O que caracteriza a espécie."
+          },
+          "characters": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri",
+              "description": "URL de um personagem."
+            },
+            "description": "Personagens que são ou foram dessa espécie."
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Endereço desta espécie na API."
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "characters",
+          "url"
+        ],
+        "additionalProperties": false
+      },
+      "Family": {
+        "type": "object",
+        "description": "Família de Mystic Falls ou ligada à história.",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Identificador da família."
+          },
+          "name": {
+            "type": "string",
+            "description": "Sobrenome da família."
+          },
+          "founding": {
+            "type": "boolean",
+            "description": "true nas cinco famílias fundadoras de Mystic Falls."
+          },
+          "description": {
+            "type": "string",
+            "description": "Quem é a família na série."
+          },
+          "characters": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri",
+              "description": "URL de um personagem."
+            },
+            "description": "Personagens da família."
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Endereço desta família na API."
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "founding",
+          "description",
+          "characters",
+          "url"
+        ],
+        "additionalProperties": false
+      },
+      "Erro": {
+        "type": "object",
+        "description": "Corpo de toda resposta de erro.",
+        "properties": {
+          "detail": {
+            "type": "string",
+            "description": "Motivo do erro."
+          }
+        },
+        "required": [
+          "detail"
+        ],
+        "additionalProperties": false
+      },
+      "ListaCharacter": {
+        "type": "object",
+        "description": "Página de Character, no formato da SWAPI.",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "description": "Total de itens que atendem à busca, somando todas as páginas."
+          },
+          "next": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri",
+            "description": "URL da próxima página, ou null na última."
+          },
+          "previous": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri",
+            "description": "URL da página anterior, ou null na primeira."
+          },
+          "results": {
+            "type": "array",
+            "maxItems": 10,
+            "items": {
+              "$ref": "#/components/schemas/Character"
+            },
+            "description": "Até 10 itens."
+          }
+        },
+        "required": [
+          "count",
+          "next",
+          "previous",
+          "results"
+        ],
+        "additionalProperties": false
+      },
+      "ListaEpisode": {
+        "type": "object",
+        "description": "Página de Episode, no formato da SWAPI.",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "description": "Total de itens que atendem à busca, somando todas as páginas."
+          },
+          "next": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri",
+            "description": "URL da próxima página, ou null na última."
+          },
+          "previous": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri",
+            "description": "URL da página anterior, ou null na primeira."
+          },
+          "results": {
+            "type": "array",
+            "maxItems": 10,
+            "items": {
+              "$ref": "#/components/schemas/Episode"
+            },
+            "description": "Até 10 itens."
+          }
+        },
+        "required": [
+          "count",
+          "next",
+          "previous",
+          "results"
+        ],
+        "additionalProperties": false
+      },
+      "ListaSeason": {
+        "type": "object",
+        "description": "Página de Season, no formato da SWAPI.",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "description": "Total de itens que atendem à busca, somando todas as páginas."
+          },
+          "next": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri",
+            "description": "URL da próxima página, ou null na última."
+          },
+          "previous": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri",
+            "description": "URL da página anterior, ou null na primeira."
+          },
+          "results": {
+            "type": "array",
+            "maxItems": 10,
+            "items": {
+              "$ref": "#/components/schemas/Season"
+            },
+            "description": "Até 10 itens."
+          }
+        },
+        "required": [
+          "count",
+          "next",
+          "previous",
+          "results"
+        ],
+        "additionalProperties": false
+      },
+      "ListaSpecies": {
+        "type": "object",
+        "description": "Página de Species, no formato da SWAPI.",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "description": "Total de itens que atendem à busca, somando todas as páginas."
+          },
+          "next": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri",
+            "description": "URL da próxima página, ou null na última."
+          },
+          "previous": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri",
+            "description": "URL da página anterior, ou null na primeira."
+          },
+          "results": {
+            "type": "array",
+            "maxItems": 10,
+            "items": {
+              "$ref": "#/components/schemas/Species"
+            },
+            "description": "Até 10 itens."
+          }
+        },
+        "required": [
+          "count",
+          "next",
+          "previous",
+          "results"
+        ],
+        "additionalProperties": false
+      },
+      "ListaFamily": {
+        "type": "object",
+        "description": "Página de Family, no formato da SWAPI.",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "description": "Total de itens que atendem à busca, somando todas as páginas."
+          },
+          "next": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri",
+            "description": "URL da próxima página, ou null na última."
+          },
+          "previous": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri",
+            "description": "URL da página anterior, ou null na primeira."
+          },
+          "results": {
+            "type": "array",
+            "maxItems": 10,
+            "items": {
+              "$ref": "#/components/schemas/Family"
+            },
+            "description": "Até 10 itens."
+          }
+        },
+        "required": [
+          "count",
+          "next",
+          "previous",
+          "results"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "parameters": {
+      "page": {
+        "name": "page",
+        "in": "query",
+        "required": false,
+        "description": "Número da página, a partir de 1. Cada página traz até 10 itens.",
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1
+        }
+      }
+    },
+    "responses": {
+      "NaoEncontrado": {
+        "description": "Recurso ou id inexistente.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Erro"
+            },
+            "example": {
+              "detail": "Não encontrado"
+            }
+          }
+        }
+      },
+      "PaginaInvalida": {
+        "description": "Página que não é um inteiro a partir de 1, ou que passa da última.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Erro"
+            },
+            "examples": {
+              "invalida": {
+                "summary": "?page=0 ou ?page=abc",
+                "value": {
+                  "detail": "Página inválida"
+                }
+              },
+              "alem_da_ultima": {
+                "summary": "?page=99",
+                "value": {
+                  "detail": "Página não encontrada"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

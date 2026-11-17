@@ -10,8 +10,10 @@ const episodes = require('../data/episodes.json');
 const seasons = require('../data/seasons.json');
 const species = require('../data/species.json');
 const families = require('../data/families.json');
+const openapi = require('../docs/openapi.json');
 
 const PAGE_SIZE = 10;
+const SWAGGER_UI = 'https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.17.14';
 
 const app = express();
 app.set('trust proxy', true); // na Vercel, req.protocol vem como https
@@ -88,6 +90,32 @@ app.get(['/', '/api'], (req, res) => {
   const lista = {};
   for (const nome of Object.keys(recursos)) lista[nome] = `${base}/${nome}`;
   res.json(lista);
+});
+
+// Contrato OpenAPI. O servidor é quem chamou, para o "Try it out" do /docs
+// funcionar tanto no localhost quanto na Vercel.
+app.get('/openapi.json', (req, res) => {
+  res.json({ ...openapi, servers: [{ url: `${req.protocol}://${req.get('host')}` }] });
+});
+
+// Documentação interativa: Swagger UI carregado do CDN, lendo o /openapi.json.
+app.get('/docs', (req, res) => {
+  res.type('html').send(`<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>tvd-api: documentação</title>
+  <link rel="stylesheet" href="${SWAGGER_UI}/swagger-ui.css">
+</head>
+<body>
+  <div id="swagger-ui"></div>
+  <script src="${SWAGGER_UI}/swagger-ui-bundle.js"></script>
+  <script>
+    SwaggerUIBundle({ url: '/openapi.json', dom_id: '#swagger-ui', deepLinking: true });
+  </script>
+</body>
+</html>`);
 });
 
 // Listagem paginada, com filtro opcional por nome: /api/{recurso}?page=2&name=elena
