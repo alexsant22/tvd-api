@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "description": "API REST de **The Vampire Diaries**, aberta e somente leitura, sem autenticação e com CORS liberado.\n\nAs respostas seguem o formato da [SWAPI](https://swapi.dev): listas paginadas com `count`, `next`, `previous` e `results`, e relações entre recursos como URLs. Para pegar a família de um personagem, por exemplo, basta fazer um GET na URL do campo `family`.\n\nDescrições, espécies e resumos dos episódios estão em português. Títulos dos episódios e créditos ficam no original.\n\nFontes: [afaf98/Vampire_diaries_API](https://github.com/afaf98/Vampire_diaries_API) e [TVMaze](https://www.tvmaze.com/api) (CC BY-SA), mais dados escritos à mão. A foto da Tatia Petrova vem da [The Vampire Diaries Wiki](https://vampirediaries.fandom.com/wiki/Tatia).",
     "license": {
-      "name": "Resumos e imagens: CC BY-SA 4.0 (TVMaze)",
+      "name": "Dados: CC BY-SA 4.0, por virem em parte da TVMaze. Código: MIT",
       "url": "https://creativecommons.org/licenses/by-sa/4.0/"
     }
   },

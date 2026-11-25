@@ -19,6 +19,13 @@ const app = express();
 app.set('trust proxy', true); // na Vercel, req.protocol vem como https
 app.use(cors());
 
+// Os dados só mudam com um deploy novo, e a Vercel limpa o cache a cada deploy.
+// A CDN guarda a resposta por um dia; o navegador sempre pergunta de novo à CDN.
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'public, max-age=0, s-maxage=86400, stale-while-revalidate=604800');
+  next();
+});
+
 // Endereço base de quem chamou, para montar as URLs das relações.
 const baseUrl = (req) => `${req.protocol}://${req.get('host')}/api`;
 

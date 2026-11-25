@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "API REST de The Vampire Diaries, no formato da SWAPI",
   "main": "src/index.js",
+  "license": "MIT",
   "type": "commonjs",
   "scripts": {
     "start": "node src/index.js",

@@ -72,3 +72,14 @@ schemas. Os exemplos saem da própria API. Depois de mudar os dados ou um campo,
 ## Deploy
 
 Publicada na Vercel como app Express: `src/index.js` exporta o app. Cada push na `main` gera um deploy de produção.
+
+As respostas saem com `Cache-Control: s-maxage=86400`: a CDN da Vercel guarda cada resposta por um dia e
+responde sem rodar a função. Como a Vercel limpa o cache a cada deploy, dado corrigido aparece assim que o
+push entra no ar.
+
+## Licença
+
+- **Código**: MIT, em [`LICENSE`](LICENSE).
+- **Dados** (`data/`): CC BY-SA 4.0, em [`data/LICENSE`](data/LICENSE), por virem em parte da TVMaze. Quem
+  reutilizar os dados dá crédito à TVMaze e a este projeto e mantém a mesma licença. As imagens dos campos
+  `image` pertencem aos seus donos e ficam fora dessa licença.

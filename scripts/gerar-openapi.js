@@ -246,7 +246,7 @@ async function main() {
         '',
         'Fontes: [afaf98/Vampire_diaries_API](https://github.com/afaf98/Vampire_diaries_API) e [TVMaze](https://www.tvmaze.com/api) (CC BY-SA), mais dados escritos à mão. A foto da Tatia Petrova vem da [The Vampire Diaries Wiki](https://vampirediaries.fandom.com/wiki/Tatia).',
       ].join('\n'),
-      license: { name: 'Resumos e imagens: CC BY-SA 4.0 (TVMaze)', url: 'https://creativecommons.org/licenses/by-sa/4.0/' },
+      license: { name: 'Dados: CC BY-SA 4.0, por virem em parte da TVMaze. Código: MIT', url: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     },
     externalDocs: { description: 'Código no GitHub', url: 'https://github.com/alexsant22/tvd-api' },
     servers: [{ url: PROD, description: 'Produção (Vercel)' }],

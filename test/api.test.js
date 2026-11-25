@@ -29,6 +29,11 @@ test('CORS liberado para qualquer origem', async () => {
   assert.equal(headers.get('access-control-allow-origin'), '*');
 });
 
+test('respostas ficam em cache na CDN', async () => {
+  const { headers } = await get('/characters');
+  assert.match(headers.get('cache-control'), /s-maxage=\d+/);
+});
+
 test('lista paginada no formato da SWAPI', async () => {
   const { status, body } = await get('/characters');
   assert.equal(status, 200);

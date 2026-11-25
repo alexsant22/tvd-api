@@ -1,0 +1,16 @@
+Licença dos dados
+
+Os dados desta pasta (data/) são distribuídos sob a licença Creative Commons
+Atribuição-CompartilhaIgual 4.0 Internacional (CC BY-SA 4.0):
+https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br
+
+Parte dos dados vem da TVMaze (https://www.tvmaze.com/api), publicada sob
+CC BY-SA, incluindo os resumos dos episódios, que foram traduzidos para o
+português a partir dos textos da TVMaze. Quem reutilizar estes dados deve
+dar crédito à TVMaze e a este projeto e manter a mesma licença.
+
+As imagens apontadas pelos campos "image" pertencem aos seus donos e não
+entram nesta licença. A foto da Tatia Petrova vem da The Vampire Diaries
+Wiki (https://vampirediaries.fandom.com).
+
+O código do projeto segue a licença MIT, no arquivo LICENSE da raiz.
