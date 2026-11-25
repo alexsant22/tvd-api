@@ -63,7 +63,8 @@ schemas. Os exemplos saem da própria API. Depois de mudar os dados ou um campo,
 
 - `data/fontes/`: dados de origem, guardados como vieram.
   - `afaf98-*.json`: do projeto [afaf98/Vampire_diaries_API](https://github.com/afaf98/Vampire_diaries_API), base dos episódios e do total de episódios por personagem.
-  - `tvmaze-*.json`: da [TVMaze](https://www.tvmaze.com/api) (licença CC BY-SA), com resumos, imagens, durações e fotos do elenco.
+  - `tvmaze-*.json`: da [TVMaze](https://www.tvmaze.com/api) (licença CC BY-SA), com resumos, imagens, durações e fotos do elenco principal e do convidado.
+  - `fandom-fotos.json`: fotos de quem não está na TVMaze, tiradas da [The Vampire Diaries Wiki](https://vampirediaries.fandom.com) (hoje só a Tatia Petrova). São imagens da série, fora da licença CC BY-SA.
 - `data/base/characters.json`, `data/species.json` e `data/families.json`: escritos à mão.
 - `data/base/episode-summaries-pt.json`: resumos dos 171 episódios traduzidos para o português a partir dos textos da TVMaze. Como tradução de conteúdo CC BY-SA, seguem na mesma licença, com crédito à TVMaze.
 - `npm run dados` junta as fontes e gera `data/characters.json`, `data/episodes.json` e `data/seasons.json`.

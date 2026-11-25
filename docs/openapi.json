@@ -3,7 +3,7 @@
   "info": {
     "title": "tvd-api",
     "version": "1.0.0",
-    "description": "API REST de **The Vampire Diaries**, aberta e somente leitura, sem autenticação e com CORS liberado.\n\nAs respostas seguem o formato da [SWAPI](https://swapi.dev): listas paginadas com `count`, `next`, `previous` e `results`, e relações entre recursos como URLs. Para pegar a família de um personagem, por exemplo, basta fazer um GET na URL do campo `family`.\n\nDescrições, espécies e resumos dos episódios estão em português. Títulos dos episódios e créditos ficam no original.\n\nFontes: [afaf98/Vampire_diaries_API](https://github.com/afaf98/Vampire_diaries_API) e [TVMaze](https://www.tvmaze.com/api) (CC BY-SA), mais dados escritos à mão.",
+    "description": "API REST de **The Vampire Diaries**, aberta e somente leitura, sem autenticação e com CORS liberado.\n\nAs respostas seguem o formato da [SWAPI](https://swapi.dev): listas paginadas com `count`, `next`, `previous` e `results`, e relações entre recursos como URLs. Para pegar a família de um personagem, por exemplo, basta fazer um GET na URL do campo `family`.\n\nDescrições, espécies e resumos dos episódios estão em português. Títulos dos episódios e créditos ficam no original.\n\nFontes: [afaf98/Vampire_diaries_API](https://github.com/afaf98/Vampire_diaries_API) e [TVMaze](https://www.tvmaze.com/api) (CC BY-SA), mais dados escritos à mão. A foto da Tatia Petrova vem da [The Vampire Diaries Wiki](https://vampirediaries.fandom.com/wiki/Tatia).",
     "license": {
       "name": "Resumos e imagens: CC BY-SA 4.0 (TVMaze)",
       "url": "https://creativecommons.org/licenses/by-sa/4.0/"
@@ -187,7 +187,7 @@
                           ],
                           "family": "https://tvd-api.vercel.app/api/families/1",
                           "description": "Pai de Stefan e Damon, caçador de vampiros em 1864.",
-                          "image": null,
+                          "image": "https://static.tvmaze.com/uploads/images/medium_portrait/157/393379.jpg",
                           "episodeCount": null,
                           "url": "https://tvd-api.vercel.app/api/characters/33"
                         },
@@ -201,7 +201,7 @@
                           ],
                           "family": "https://tvd-api.vercel.app/api/families/1",
                           "description": "Mãe de Stefan e Damon, que eles julgavam morta desde a infância.",
-                          "image": null,
+                          "image": "https://static.tvmaze.com/uploads/images/medium_portrait/81/204142.jpg",
                           "episodeCount": null,
                           "url": "https://tvd-api.vercel.app/api/characters/34"
                         },
@@ -214,7 +214,7 @@
                           ],
                           "family": "https://tvd-api.vercel.app/api/families/1",
                           "description": "Descendente humano dos Salvatore, que guarda a pensão da família.",
-                          "image": null,
+                          "image": "https://static.tvmaze.com/uploads/images/medium_portrait/507/1267795.jpg",
                           "episodeCount": null,
                           "url": "https://tvd-api.vercel.app/api/characters/35"
                         }
@@ -819,7 +819,7 @@
               "null"
             ],
             "format": "uri",
-            "description": "Foto do ator no papel (TVMaze), ou null quando não há foto."
+            "description": "Foto do ator no papel (TVMaze); sem ela, a foto do ator. null quando não há nenhuma."
           },
           "episodeCount": {
             "type": [

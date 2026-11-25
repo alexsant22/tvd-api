@@ -52,15 +52,40 @@ const seasons = ler('fontes/tvmaze-seasons.json').map((t) => ({
 }));
 
 // Personagens: base escrita à mão, com foto da TVMaze e total de episódios do afaf98.
+// A foto vem do elenco principal; se não houver, do elenco convidado (juntado dos
+// 171 episódios). Sem foto no papel, entra a foto do ator. Quem não está na TVMaze
+// ganha a foto da wiki do Fandom (data/fontes/fandom-fotos.json).
 const afafPersonagens = ler('fontes/afaf98-characters.json');
 const tvmazeElenco = ler('fontes/tvmaze-cast.json');
+const tvmazeConvidados = ler('fontes/tvmaze-guestcast.json');
+const fandomFotos = ler('fontes/fandom-fotos.json');
+
+// Nomes que a TVMaze escreve de outro jeito no elenco convidado.
+const nomeNaTvmaze = {
+  'Miranda Gilbert': 'Miranda Sommers-Gilbert',
+  'Liz Forbes': 'Sheriff Liz Forbes',
+  'Richard Lockwood': 'Mayor Richard Lockwood',
+  'Lily Salvatore': 'Lillian "Lily" Salvatore',
+  'Meredith Fell': 'Dr. Meredith Fell',
+  'Sheila Bennett': 'Sheila "Grams" Bennett',
+  'Jo Laughlin': 'Josette "Jo" Laughlin',
+  'Liv Parker': 'Olivia "Liv" Parker',
+  Anna: 'Anna Zhu',
+  Pearl: 'Pearl Zhu',
+};
 
 const characters = ler('base/characters.json').map((p) => {
   const afaf = afafPersonagens.find((a) => a.character === p.name);
-  const foto = tvmazeElenco.find((c) => c.character === p.name && c.image);
+  const nome = nomeNaTvmaze[p.name] || p.name;
+  const principal = tvmazeElenco.find((c) => c.character === p.name && c.image);
+  const convidado = tvmazeConvidados.find((c) => c.character === nome);
+  const fandom = fandomFotos.find((f) => f.character === p.name);
+  const foto = principal
+    ? principal.image
+    : (convidado && (convidado.image || convidado.actorImage)) || (fandom && fandom.image);
   return {
     ...p,
-    image: foto ? foto.image : null,
+    image: foto || null,
     episodeCount: afaf ? afaf.episodeCount : null,
   };
 });
